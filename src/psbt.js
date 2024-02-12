@@ -80,7 +80,7 @@ export const generatePsbt = async (
                 console.error('No ordinals UTXO exist')
                 return
             }
-    
+
             ordinalsUtxos = ordinalsUtxos.data.data
             ordinalsUtxos = ordinalsUtxos.filter(utxo => !utxo.isSpent)
 

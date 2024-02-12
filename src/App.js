@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './App.css';
 import * as psbt from "./psbt";
+import { base64, hex } from '@scure/base'
 
 // const RECIPIENT_ADDRESS = 'tb1q8gqpqkavur3kp93kuvea4mv9tcj0cahltalf9r'
 // const INSCRIPTION_ID = 'e3452dbdfd1cee654571fba827d455611b33623b29d9f9d94b7ebb4fccaf52dfi0'
@@ -11,13 +12,13 @@ const INSCRIPTION_ID = '5ed01feb213e8ecfb678e1f691704123a748f87a4053ba09e4f68078
 const FEE_RATE = 30
 
 function App() {
-	const [walletConnected, setWalletConnection] = useState(false)
+	const [walletConnected, setWalletConnected] = useState(false)
 	const [paymentAccount, setPaymentAccount] = useState(null)
 	const [ordinalsAccount, setOrdinalsAccount] = useState(null)
 
 	const setAccounts = (accounts) => {
 		if (accounts) {
-			setWalletConnection(true)
+			setWalletConnected(true)
 			for (const account of accounts) {
 				if (account.purpose === 'payment') {
 					setPaymentAccount(account)
@@ -26,7 +27,7 @@ function App() {
 				}
 			}
 		} else {
-			setWalletConnection(false)
+			setWalletConnected(false)
 			setPaymentAccount(null)
 			setOrdinalsAccount(null)
 		}
@@ -165,7 +166,7 @@ function App() {
 			const signature = await window.phantom.bitcoin.signMessage(paymentAccount.address, messageBytes)
 			console.log(signature)
 		} catch (error) {
-			console.log(JSON.stringify(error));
+			console.log(JSON.stringify(error))
 			alert(JSON.stringify(error))
 		}
 	}
